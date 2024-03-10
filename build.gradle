@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'net.sourceforge.tess4j:tess4j:5.11.0'
+}
+
+jar {
+    // Fat jar
+    from (configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }) {}
+    duplicatesStrategy = 'FAIL'
+    exclude 'META-INF/**', '**/module-info.class','versionchanges.txt'
+
+    manifest {
+        attributes('Main-Class': 'Main')
+    }
+}
